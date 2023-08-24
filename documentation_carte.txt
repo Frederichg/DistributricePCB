@@ -1,0 +1,54 @@
+Ce document sert à expliquer chaque composant présent sur la carte électronique permettant de contrôler le feeder.
+La carte electronique sert également à : 
+1. Commander les émetteur et récepteurs IRF, qui permettent de savoir si le rat est rentré dans le bon ou dans le mauvais trou ainsi que de savoir s’il a récupérer son reward ou pas dans le cas où il ait choisi la bonne reponse auparavant. 
+2. Commander le moteur, qui permet de donner un reward au rat à chaque fois qu’il fait une bonne reponse.
+3. A envoyer des informations à la tours, ce qui permet à la tour de savoir que l’ordre qui a été envoyé par cette dernière a été suivi. Par exemple la tour envoie un ordre de donner un reward au rat parce qu’il a fait une bonne reponse, tant que la boxe n’ait pas envoyé l’information à la tour que le reward a été donné la tour ne pourra pas envoyer l’instruction suivant. Une fois que le reward soit donné au rat la box envoie une infomation cette informartion à la tour et cette dernière peut donner donner un nouvel ordre.
+Ci-dessous, la description exacte de chaque element de la tour : 
+1- Le premier élément est le power supply.
+Via un terminal block, on alimente le circuit avec une tension de 12 volts, c’est grâce à cette tension d’alimentation que tout le circuit fonctionnera. La tension d’alimentation a toujours 2 fils, un fil noir pour la masse et un fil rouge pour la tension.
+2- Convertisseur de tension
+Ce composant permet de convertir la tension de 12 volts à une tension de 5 volts. La carte électronique fonctionne avec une tension de 5 volts, il faut donc réduire la tension d’entrée de 12vols (power supply vu précédemment) à une tension de 5 volts dans le  but de pouvoir alimenter les composants présents sur la carte avec la tension nécessaire car si on alimente directement avec les 12 volts ils risquent de griller.
+
+3- Moteur
+Le moteur sera commandé par la carte ESP32 via des terminals blocks également. Le moteur est l’élément qui permet de donner le reward aux rats à chaque fois qu’ils font une bonne réponse
+
+4- Emetters et IR
+Les émetteurs et les IR(infrared receptor) sont les composants qui permettent de détecter si le rat est rentré dans le bon ou dans le mauvais ainsi que de savoir s’il a récupérer le reward ou pas dans le cas où il ait choisi la bonne reponse . Les emmeteurs et IR sont contrôlés par l’esp32 et ils sont connectés à l’esp32 via de terminals blocks,
+ils sont alimentés avec une tension de 3.6 volts, il faut donc mettre une résistance en serie avec les émetteur et les IR dans le but de limiter le courant et d’éviter de griller la led.
+
+5- ESP32
+L’esp32 c’est le cœur de la carte électronique et c’est grâce à cet élément que l’on arrive à contrôler tous les autres composants (motor,emetteurs,IR,I2C etc)
+
+6- Extra GPIO
+Les pins du esp32 qui sont pas utilisées sont disponibles via des terminals block. Si on souhaite par exemple utiliser une pin du esp32 on aura qu’à relier le fil dans le terminal block correspondant, voici un exemple
+
+7-  I2C
+Le « truc » permet à l’esp32 de communiquer avec le « truc » dans le but d’envoyer des informations nécessaires en utilisant le protocole I2C
+
+8- LED
+Cette Led sert à allumer le food port (endroit où le rat recupere le reward)
+9- Relay
+Le relay sert à contrôler un solinoide pour le jus
+10- Tower input
+Permet d’envoyer les informations de la carte electronique à la tour(par exemple pour envoyer un ordre de donner un reward au rat)
+11- Tower output
+Permet d’envoyer les informations de la tour vers la carte electronique(par exemple pour dire que le reward a été donné au rat)
+12- Optocupler
+C’est grâce à cet element que l’on arrive à convertir le signal de -28 volts(envoyé par la tour) à un signal de 5 volts, permettant de faire fonctionner la tour.
+13- H_light	
+Cette led sert à indiquer le rat a fait une omission
+14- Transistor
+Cet element permet de commander la LED qui s’allumer à chaque fois que le rat fait une omission
+
+
+
+
+
+
+
+
+
+
+ 
+
+
